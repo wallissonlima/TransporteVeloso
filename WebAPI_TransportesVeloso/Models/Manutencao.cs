@@ -7,7 +7,7 @@ namespace WebAPI_TransportesVeloso.Models
 {
     public class Manutencao
     {
-        public int IdManutencao { get; set}
+        public int IdManutencao { get; set; }
         public DateTime DataManutencao { get; set; } 
         public Decimal ValorManutencao { get; set; }
         public string Descricao { get; set; }

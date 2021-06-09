@@ -27,4 +27,3 @@ namespace WebAPI_TransportesVeloso.Models
         #endregion
     }
 }
-}
