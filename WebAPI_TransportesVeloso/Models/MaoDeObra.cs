@@ -11,6 +11,7 @@ namespace WebAPI_TransportesVeloso.Models
 {
     public class MaoDeObra
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdMaoDeObra { get; set; }
         public string Descricao { get; set; }
         public Decimal Valor { get; set; }

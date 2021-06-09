@@ -11,6 +11,7 @@ namespace WebAPI_TransportesVeloso.Models
 {
     public class TipoManutencao
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdTipoVeiculo { get; set; }
         public string Descricao { get; set; }
 

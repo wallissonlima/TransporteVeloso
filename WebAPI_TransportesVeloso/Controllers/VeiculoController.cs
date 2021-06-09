@@ -36,7 +36,7 @@ namespace WebAPI_TransportesVeloso.Controllers
                 return Ok(lstVeiculo);
             }
             else
-                return BadRequest("Usuário ou senha inválidos");
+                return BadRequest("Placa não encontrada");
         }
 
         [HttpPost]

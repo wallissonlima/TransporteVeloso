@@ -11,6 +11,7 @@ namespace WebAPI_TransportesVeloso.Models
 {
     public class Itinerario
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdItinerario { get; set; }
         public string DestinoInicial { get; set; }
         public string DesinoFinal { get; set; }

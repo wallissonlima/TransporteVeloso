@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +9,7 @@ namespace WebAPI_TransportesVeloso.Models
 {
     public class Viagem
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdViagem { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }

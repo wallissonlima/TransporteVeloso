@@ -11,6 +11,7 @@ namespace WebAPI_TransportesVeloso.Models
 {
     public class Peca
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdPeca { get; set; }
         public string Nome { get; set; }
         public int Quantidade { get; set; }
