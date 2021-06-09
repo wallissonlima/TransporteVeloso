@@ -14,5 +14,8 @@ namespace WebAPI_TransportesVeloso.Models
         public int QuilometragemFinal { get; set; }
         public int IdItinerario { get; set; }
         public int IdVeiculo { get; set; }
+
+
+        //TESTE DE COMMIT
     }
 }
