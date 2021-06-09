@@ -20,23 +20,33 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         private static List<Veiculo> veiculo = new List<Veiculo>();
         
-        public Veiculo Get(string placa)
+        public IHttpActionResult GetVeiculo(string placa)
         {
+            //ConsultaModelo
+            //https://localhost:44324/api/Veiculo/GetVeiculo?placa=FSK3F56
+
             Veiculo objVeiculo = new Veiculo();
             objVeiculo = this.context.AspNetVeiculo.Where(x => x.Placa == placa).FirstOrDefault();
 
+
+            List<Veiculo> lstVeiculo = new List<Veiculo>();
             if (objVeiculo != null)
-                return objVeiculo;
+            {
+                lstVeiculo.Add(objVeiculo);
+                return Ok(lstVeiculo);
+            }
             else
-                return null;
+                return BadRequest("Usuário ou senha inválidos");
         }
 
+        [HttpPost]
         public void Post(string placa)
         {
          //   if (!string.IsNullOrEmpty(placa))
             //    veiculo.Add(new Veiculo(placa));
         }
 
+        [HttpDelete]
         public void Delete(string placa)
         {
             //1 pegar o veiculo e amarzenar no obejeto veiculo

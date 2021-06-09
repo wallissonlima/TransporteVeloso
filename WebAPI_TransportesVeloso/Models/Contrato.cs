@@ -11,6 +11,7 @@ namespace WebAPI_TransportesVeloso.Models
 {
     public class Contrato
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdContrato { get; set; }
         public string Numero { get; set; }
         public Decimal Valor { get; set; }
@@ -18,6 +19,9 @@ namespace WebAPI_TransportesVeloso.Models
         public DateTime DataTermino { get; set; }
         public string Descricao { get; set; }
         public Byte Arquivo { get; set; }
+
+        //[ForeignKey("Hidrometro")]
+        //public int IdContratoVeiculo { get; set; }
 
         #region[Relacionamento 1:N]
         /*Indica ao Entity Framework que existe um relacionamento de 
