@@ -38,6 +38,7 @@ namespace WebAPI_TransportesVeloso.Models
                          */
 #if DEBUG
             Database.Log = d => System.Diagnostics.Debug.WriteLine(d);
+            var teste = Database.Log;
 #endif
         }
         public static ApplicationDbContext Create()

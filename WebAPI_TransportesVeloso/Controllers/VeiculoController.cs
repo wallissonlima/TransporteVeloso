@@ -19,31 +19,59 @@ namespace WebAPI_TransportesVeloso.Controllers
         }
 
         private static List<Veiculo> veiculo = new List<Veiculo>();
-        
+
         public IHttpActionResult GetVeiculo(string placa)
         {
             //ConsultaModelo
             //https://localhost:44324/api/Veiculo/GetVeiculo?placa=FSK3F56
 
+            //Declaração de um objeto Veículo
             Veiculo objVeiculo = new Veiculo();
+
+            //Pega um único objeto veículo pela placa
             objVeiculo = this.context.AspNetVeiculo.Where(x => x.Placa == placa).FirstOrDefault();
 
-
+            //Declara uma lista de objetos do tipo veículo
             List<Veiculo> lstVeiculo = new List<Veiculo>();
+
+            //Se o objVeiculo for diferente de nulo.
             if (objVeiculo != null)
             {
+                //Adiciona o objeto veículo à lista de Veículos
                 lstVeiculo.Add(objVeiculo);
+
+                //Retorno ok (código 200)
                 return Ok(lstVeiculo);
             }
             else
+                //Se o objVeículo for nulo, retorna BadRequest (código 500).
                 return BadRequest("Placa não encontrada");
         }
-
-        [HttpPost]
-        public void Post(string placa)
+        
+        public Veiculo PostVeiculo(int idTipoVeiculo, string placa, string renavam, string chassi, string descricao, bool zeroQuilometro)
         {
-         //   if (!string.IsNullOrEmpty(placa))
-            //    veiculo.Add(new Veiculo(placa));
+            try
+            {
+                Veiculo objVeiculo = new Veiculo();
+                objVeiculo.IdTipoVeiculo = idTipoVeiculo;
+                objVeiculo.Placa = placa;
+                objVeiculo.Renavam = renavam;
+                objVeiculo.Chassi = chassi;
+                objVeiculo.Descricao = descricao;
+                objVeiculo.ZeroQuilometro = zeroQuilometro;
+
+                context.AspNetVeiculo.Add(objVeiculo);
+                context.SaveChanges();
+
+                return objVeiculo;
+                //return Ok("Veículo cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                //return BadRequest("Erro ao cadastrar o veículo, entre em contato com o administrador do sistema.");
+                return null;
+            }
         }
 
         [HttpDelete]
@@ -54,8 +82,8 @@ namespace WebAPI_TransportesVeloso.Controllers
             objVeiculo = this.context.AspNetVeiculo.Where(x => x.Placa == placa).FirstOrDefault();
             //2 enviar o objeto veiculo para exclusão 
             if (objVeiculo != null)
-            { 
-            context.AspNetVeiculo.Remove(objVeiculo);
+            {
+                context.AspNetVeiculo.Remove(objVeiculo);
                 context.SaveChanges();
             }
 
