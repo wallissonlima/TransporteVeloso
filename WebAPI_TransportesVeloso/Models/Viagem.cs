@@ -7,6 +7,7 @@ using System.Web;
 
 namespace WebAPI_TransportesVeloso.Models
 {
+    [Table("TB_Viagem")]
     public class Viagem
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

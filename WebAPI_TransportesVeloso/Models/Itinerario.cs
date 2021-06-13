@@ -9,13 +9,14 @@ using Newtonsoft.Json.Converters;
 
 namespace WebAPI_TransportesVeloso.Models
 {
+    [Table("TB_Itinerario")]
     public class Itinerario
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdItinerario { get; set; }
         public string DestinoInicial { get; set; }
-        public string DesinoFinal { get; set; }
-        public string CaminhoPergorrido { get; set; }
+        public string DestinoFinal { get; set; }
+        public string CaminhoPercorrido { get; set; }
         public string Periodicidade { get; set; }
 
         #region[Relacionamento 1:N]

@@ -63,7 +63,7 @@ namespace WebAPI_TransportesVeloso.Models
         public virtual DbSet<Itinerario> AspNetItinerario { get; set; }
         public virtual DbSet<Usuario> AspNetUsuario { get; set; }
         public virtual DbSet<Consumo> AspNetConsumo { get; set; }
-        public virtual DbSet<PerfilUsuario> PerfilUsuarios { get; set; }
+        public virtual DbSet<PerfilUsuario> AspNetPerfilUsuario { get; set; }
 
     }
 }

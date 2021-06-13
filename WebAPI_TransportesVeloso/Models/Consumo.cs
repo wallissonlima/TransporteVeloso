@@ -7,12 +7,13 @@ using System.Web;
 
 namespace WebAPI_TransportesVeloso.Models
 {
+    [Table("TB_Consumo")]
     public class Consumo
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdConsumo { get; set; }
         public int Quilometragem { get; set; }
-        public DateTime DatAbastecimento { get; set; }
+        public DateTime DataAbastecimento { get; set; }
         public Decimal ValorLitroCombustivel { get; set; }
         public Decimal ValorAbastecido { get; set; }
         public int IdVeiculo { get; set; }

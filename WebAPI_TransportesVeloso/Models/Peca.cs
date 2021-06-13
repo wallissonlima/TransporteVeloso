@@ -9,6 +9,7 @@ using Newtonsoft.Json.Converters;
 
 namespace WebAPI_TransportesVeloso.Models
 {
+    [Table("TB_Pecas")]
     public class Peca
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

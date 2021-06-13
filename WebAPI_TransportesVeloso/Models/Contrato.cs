@@ -9,6 +9,7 @@ using Newtonsoft.Json.Converters;
 
 namespace WebAPI_TransportesVeloso.Models
 {
+    [Table("TB_Contrato")]
     public class Contrato
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

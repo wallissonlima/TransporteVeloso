@@ -7,6 +7,7 @@ using System.Web;
 
 namespace WebAPI_TransportesVeloso.Models
 {
+    [Table("TB_Usuario")]
     public class Usuario
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,5 +17,7 @@ namespace WebAPI_TransportesVeloso.Models
         public string Telefone { get; set; }
         public string Endereco { get; set; }
         public string Senha { get; set; }
+        public int IdPerfilUsuario { get; set; }
+
     }
 }

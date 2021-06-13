@@ -9,10 +9,11 @@ using Newtonsoft.Json.Converters;
 
 namespace WebAPI_TransportesVeloso.Models
 {
+    [Table("TD_Tipo_Manutencao")]
     public class TipoManutencao
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdTipoVeiculo { get; set; }
+        public int IdTipoManutencao{ get; set; }
         public string Descricao { get; set; }
 
         #region[Relacionamento 1:N]
