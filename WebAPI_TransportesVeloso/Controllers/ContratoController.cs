@@ -45,10 +45,29 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         }
 
-        public IHttpActionResult PostContrato(int idContrato, string numero, Decimal valor, DateTime dataAssinatura, DateTime dataTermino, string descricao, Byte? arquivo = null)
+        //POST
+        public IHttpActionResult PostContrato(string numero, Decimal valor, DateTime dataAssinatura, DateTime dataTermino, string descricao, Byte? arquivo = null)
         {
+            try
+            {
+                Contrato objContrato = new Contrato();
+                objContrato.Numero = numero;
+                objContrato.Valor = valor;
+                objContrato.DataAssinatura = dataAssinatura;
+                objContrato.DataTermino = dataTermino;
+                objContrato.Descricao = descricao;
+                objContrato.Arquivo = (byte)(arquivo = null);
 
-            return Ok("OK");
+                context.AspNetContrato.Add(objContrato);
+                context.SaveChanges();
+
+                return Ok("Contrato cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao cadastrar o Contrato, entre em contato com o administrador do sistema.");
+            }
         }
 
         public IHttpActionResult PutContrato(int idContrato, string numero, Decimal valor, DateTime dataAssinatura, DateTime dataTermino, string descricao, Byte? arquivo = null)
@@ -57,29 +76,6 @@ namespace WebAPI_TransportesVeloso.Controllers
             return Ok("OK");
         }
 
-        public IHttpActionResult DeleteContrato(string numero)
-        {
-            //Declaração de um objeto Contrato
-            Contrato objContrato = new Contrato();
-
-            //Pega um único objeto do tipo Contrato
-            objContrato = this.context.AspNetContrato.Where(x => x.Numero == numero).FirstOrDefault();
-
-            //Declara um lista de objetos do tipo Contrato
-            List<Contrato> lstContrato = new List<Contrato>();
-
-            //Se o objContrato for diferente de nulo.
-            if (objContrato != null)
-            {
-                //Adiciona o objeto Numero à lista de Contrato
-                lstContrato.Remove(objContrato);
-
-                //Retorno OK (Código 200)
-                return Ok(lstContrato);
-            }
-            else
-                //Se objContrato for nulo, retorna BadRequest (código 500).
-                return BadRequest("Numero não encontrada");
-        }
+       
     }
 }

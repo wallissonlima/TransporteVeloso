@@ -23,8 +23,8 @@ namespace WebAPI_TransportesVeloso.Models
             * Como é esperado um Delegate, o valor a ser passado, pode ser através de uma expressão Lambda.
                          * Somente deve ser processado em modo DEBUG
                          */
-            #if DEBUG
-                Database.Log = d => System.Diagnostics.Debug.WriteLine(d);
+#if DEBUG
+            Database.Log = d => System.Diagnostics.Debug.WriteLine(d);
                 var teste = Database.Log;
             #endif
         }

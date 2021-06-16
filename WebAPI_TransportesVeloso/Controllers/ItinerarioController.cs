@@ -19,6 +19,7 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         private static List<Itinerario> itinerario = new List<Itinerario>();
 
+        //GET
         public IHttpActionResult GetItinerario(string destinoInicial)
         {
             //Declaração de um objeto Contrato
@@ -42,7 +43,86 @@ namespace WebAPI_TransportesVeloso.Controllers
             else
                 //Se objContrato for nulo, retorna BadRequest (código 500).
                 return BadRequest("Numero não encontrada");
+        }
 
+        //POST
+        public IHttpActionResult PostItinerario(string destinoInicial, string destinoFinal, string caminhoPercorrido, string periodicidade)
+        {
+            try
+            {
+                Itinerario objItinerario = new Itinerario();
+                objItinerario.DestinoInicial = destinoInicial;
+                objItinerario.DestinoFinal = destinoFinal;
+                objItinerario.CaminhoPercorrido = caminhoPercorrido;
+                objItinerario.Periodicidade = periodicidade;
+
+                context.AspNetItinerario.Add(objItinerario);
+                context.SaveChanges();
+
+                return Ok("Itinerario cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao cadastrar o Itinerario, entre em contato com o administrador do sistema.");
+            }
+        }
+
+        //PUT
+        public IHttpActionResult PutItinerario(string destinoInicial, string destinoFinal, string caminhoPercorrido, string periodicidade)
+        {
+            try
+            {
+                Itinerario objItinerario = new Itinerario();
+                objItinerario = this.context.AspNetItinerario.Where(x => x.DestinoInicial == destinoInicial).FirstOrDefault();
+
+                if (objItinerario != null)
+                {
+                objItinerario.DestinoInicial = destinoInicial;
+                objItinerario.DestinoFinal = destinoFinal;
+                objItinerario.CaminhoPercorrido = caminhoPercorrido;
+                objItinerario.Periodicidade = periodicidade;
+
+                    context.SaveChanges();
+
+                    return Ok("Itinerario alterado com sucesso.");
+                }
+                else
+                {
+                    return Ok("Itinerario não encontrado!");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao alterar o Itinerario, entre em contato com o administrador do sistema.");
+            }
+        }
+
+        //DELETE
+        public IHttpActionResult DeleteItinerario(string destinoInicial)
+        {
+            try
+            {
+                Itinerario objItinerario = new Itinerario();
+                objItinerario = this.context.AspNetItinerario.Where(x => x.DestinoInicial == destinoInicial).FirstOrDefault();
+
+                if (objItinerario != null)
+                {
+                    context.AspNetItinerario.Remove(objItinerario);
+                    context.SaveChanges();
+                    return Ok("Itinerario removido com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Itinerario não encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao excluir o Itinerario, entre em contato com o administrador do sistema.");
+            }
         }
     }
 }

@@ -19,6 +19,7 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         private static List<Usuario> usuario = new List<Usuario>();
 
+        //GET
         public IHttpActionResult GetUsuario(string nome)
         {
             //Declaração de um objeto Usuario
@@ -42,7 +43,90 @@ namespace WebAPI_TransportesVeloso.Controllers
             else
                     //Se objUsuario for nulo, retorna BadRequest (código 500).
                     return BadRequest("Numero não encontrada");
+        }
 
+        //POST
+        public IHttpActionResult PostUsuario(string nome, string email, string telefone, string endereco, string senha, int idPerfilUsuario)
+        {
+            try
+            {
+                Usuario objUsuario = new Usuario();
+                objUsuario.Nome = nome;
+                objUsuario.Email = email;
+                objUsuario.Telefone = telefone;
+                objUsuario.Endereco = endereco;
+                objUsuario.Senha = senha;
+                objUsuario.IdPerfilUsuario = idPerfilUsuario;
+
+                context.AspNetUsuario.Add(objUsuario);
+                context.SaveChanges();
+
+                return Ok("Usuario cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao cadastrar o Usuario, entre em contato com o administrador do sistema.");
+            }
+        }
+
+        //PUT
+        public IHttpActionResult PutUsuario(string nome, string email, string telefone, string endereco, string senha, int idPerfilUsuario)
+        {
+            try
+            {
+                Usuario objUsuario = new Usuario();
+                objUsuario = this.context.AspNetUsuario.Where(x => x.Nome == nome).FirstOrDefault();
+
+                if (objUsuario != null)
+                {
+                objUsuario.Nome = nome;
+                objUsuario.Email = email;
+                objUsuario.Telefone = telefone;
+                objUsuario.Endereco = endereco;
+                objUsuario.Senha = senha;
+                objUsuario.IdPerfilUsuario = idPerfilUsuario;
+
+                    context.SaveChanges();
+
+                    return Ok("Usuario alterado com sucesso.");
+                }
+                else
+                {
+                    return Ok("Usuario não encontrado!");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao alterar o Usuario, entre em contato com o administrador do sistema.");
+            }
+        }
+
+        //DELETE
+        public IHttpActionResult DeleteUsuario(string nome)
+        {
+            try
+            {
+                Usuario objUsuario = new Usuario();
+                objUsuario = this.context.AspNetUsuario.Where(x => x.Nome == nome).FirstOrDefault();
+
+                if (objUsuario != null)
+                {
+                    context.AspNetUsuario.Remove(objUsuario);
+                    context.SaveChanges();
+                    return Ok("Usuario removido com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Usuario não encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao excluir o Usuario, entre em contato com o administrador do sistema.");
+            }
         }
     }
 }

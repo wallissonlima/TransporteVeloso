@@ -20,6 +20,7 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         private static List<Veiculo> veiculo = new List<Veiculo>();
 
+        //GET
         public IHttpActionResult GetVeiculo(string placa)
         {
             //ConsultaModelo
@@ -48,6 +49,7 @@ namespace WebAPI_TransportesVeloso.Controllers
                 return BadRequest("Placa não encontrada");
         }
         
+        //POST
         public IHttpActionResult PostVeiculo(int idTipoVeiculo, string placa, string renavam, string chassi, string descricao, bool zeroQuilometro)
         {
             //https://localhost:44324/api/Veiculo/PostVeiculo?idTipoVeiculo=1&placa=TTT0T12&renavam=AAA423D5870&chassi=RRRRGH5412OPL6394&descricao=TESTE_DE_PUT&zeroQuilometro=false
@@ -73,6 +75,7 @@ namespace WebAPI_TransportesVeloso.Controllers
             }
         }
 
+        //PUT
         public IHttpActionResult PutVeiculo(int idTipoVeiculo, string placa, string renavam, string chassi, string descricao, bool zeroQuilometro)
         {
             //https://localhost:44324/api/Veiculo/PostVeiculo?idTipoVeiculo=1&placa=TTT0T12&renavam=AAA423D5870&chassi=RRRRGH5412OPL6394&descricao=TESTE_DE_PUT&zeroQuilometro=false
@@ -106,6 +109,7 @@ namespace WebAPI_TransportesVeloso.Controllers
             }
         }
 
+        //DELETE
         public IHttpActionResult DeleteVeiculo(string placa)
         {
             //https://localhost:44324/api/Veiculo/DeleteVeiculo?placa=FSK3G56
