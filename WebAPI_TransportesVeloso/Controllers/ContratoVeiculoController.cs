@@ -6,6 +6,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
+// Teste
+
 namespace WebAPI_TransportesVeloso.Controllers
 {
     public class ContratoVeiculoController : ApiController
