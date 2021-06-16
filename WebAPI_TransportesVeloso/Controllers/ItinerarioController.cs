@@ -10,18 +10,18 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class ItinerarioController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public ItinerarioController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<Itinerario> itinerario = new List<Itinerario>();
 
         public IHttpActionResult GetItinerario(string destinoInicial)
         {
-            //Declaração de um obejeto Contrato
+            //Declaração de um objeto Contrato
             Itinerario objItinerario = new Itinerario();
 
             //Pega um único objeto do tipo Contrato

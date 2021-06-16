@@ -10,18 +10,18 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class ManutencaoController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public ManutencaoController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<Manutencao> manutencao = new List<Manutencao>();
 
         public IHttpActionResult GetManutencao(DateTime dataManutencao)
         {
-            //Declaração de um obejeto Manutencao
+            //Declaração de um objeto Manutencao
             Manutencao objManutencao = new Manutencao();
 
             //Pega um único objeto do tipo Manutencao

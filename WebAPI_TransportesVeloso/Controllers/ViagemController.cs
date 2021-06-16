@@ -10,11 +10,11 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class ViagemController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public ViagemController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<Viagem> viagem = new List<Viagem>();

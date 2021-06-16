@@ -10,18 +10,18 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class UsuarioController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public UsuarioController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<Usuario> usuario = new List<Usuario>();
 
         public IHttpActionResult GetUsuario(string nome)
         {
-            //Declaração de um obejeto Usuario
+            //Declaração de um objeto Usuario
             Usuario objUsuario = new Usuario();
 
                 //Pega um único objeto do tipo Usuario

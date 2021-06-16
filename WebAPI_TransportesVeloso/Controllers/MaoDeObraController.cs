@@ -10,18 +10,18 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class MaoDeObraController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public MaoDeObraController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<MaoDeObra> maoDeObra = new List<MaoDeObra>();
 
         public IHttpActionResult GetMaoDeObra(string descricao)
         {
-            //Declaração de um obejeto MaoDeObra
+            //Declaração de um objeto MaoDeObra
             MaoDeObra objMaoDeObra = new MaoDeObra();
 
             //Pega um único objeto do tipo Contrato

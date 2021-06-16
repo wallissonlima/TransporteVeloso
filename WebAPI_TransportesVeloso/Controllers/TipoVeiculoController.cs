@@ -10,18 +10,18 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class TipoVeiculoController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public TipoVeiculoController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<TipoVeiculo> tipoVeiculo = new List<TipoVeiculo>();
 
         public IHttpActionResult GetTipoVeiculo(string descricao)
         {
-            //Declaração de um obejeto TipoVeiculo
+            //Declaração de um objeto TipoVeiculo
             TipoVeiculo objTipoVeiculo = new TipoVeiculo();
 
             //Pega um único objeto do tipo TipoVeiculo

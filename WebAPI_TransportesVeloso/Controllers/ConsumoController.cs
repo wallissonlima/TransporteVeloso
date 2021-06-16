@@ -10,18 +10,18 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class ConsumoController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public ConsumoController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<Consumo> consumo = new List<Consumo>();
 
         public IHttpActionResult GetConsumo(int quilometragem)
         {
-            //Declaração de um obejeto consumo
+            //Declaração de um objeto consumo
             Consumo objConsumo = new Consumo();
 
             //Pega um único objeto do tipo consumo

@@ -6,17 +6,15 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-// Teste
-
 namespace WebAPI_TransportesVeloso.Controllers
 {
     public class ContratoVeiculoController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public ContratoVeiculoController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<ContratoVeiculo> contrato = new List<ContratoVeiculo>();

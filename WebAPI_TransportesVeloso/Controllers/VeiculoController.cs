@@ -11,11 +11,11 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class VeiculoController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public VeiculoController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<Veiculo> veiculo = new List<Veiculo>();
@@ -48,8 +48,9 @@ namespace WebAPI_TransportesVeloso.Controllers
                 return BadRequest("Placa não encontrada");
         }
         
-        public Veiculo PostVeiculo(int idTipoVeiculo, string placa, string renavam, string chassi, string descricao, bool zeroQuilometro)
+        public IHttpActionResult PostVeiculo(int idTipoVeiculo, string placa, string renavam, string chassi, string descricao, bool zeroQuilometro)
         {
+            //https://localhost:44324/api/Veiculo/PostVeiculo?idTipoVeiculo=1&placa=TTT0T12&renavam=AAA423D5870&chassi=RRRRGH5412OPL6394&descricao=TESTE_DE_PUT&zeroQuilometro=false
             try
             {
                 Veiculo objVeiculo = new Veiculo();
@@ -63,32 +64,71 @@ namespace WebAPI_TransportesVeloso.Controllers
                 context.AspNetVeiculo.Add(objVeiculo);
                 context.SaveChanges();
 
-                return objVeiculo;
-                //return Ok("Veículo cadastrado com sucesso");
+                return Ok("Veículo cadastrado com sucesso");
             }
             catch (Exception ex)
             {
                 string vErro = ex.Message;
-                //return BadRequest("Erro ao cadastrar o veículo, entre em contato com o administrador do sistema.");
-                return null;
+                return BadRequest("Erro ao cadastrar o veículo, entre em contato com o administrador do sistema.");
             }
         }
 
-        [HttpDelete]
-        public void Delete(string placa)
+        public IHttpActionResult PutVeiculo(int idTipoVeiculo, string placa, string renavam, string chassi, string descricao, bool zeroQuilometro)
         {
-            //1 pegar o veiculo e amarzenar no obejeto veiculo
-            Veiculo objVeiculo = new Veiculo();
-            objVeiculo = this.context.AspNetVeiculo.Where(x => x.Placa == placa).FirstOrDefault();
-            //2 enviar o objeto veiculo para exclusão 
-            if (objVeiculo != null)
+            //https://localhost:44324/api/Veiculo/PostVeiculo?idTipoVeiculo=1&placa=TTT0T12&renavam=AAA423D5870&chassi=RRRRGH5412OPL6394&descricao=TESTE_DE_PUT&zeroQuilometro=false
+            try
             {
-                context.AspNetVeiculo.Remove(objVeiculo);
-                context.SaveChanges();
+                Veiculo objVeiculo = new Veiculo();
+                objVeiculo = this.context.AspNetVeiculo.Where(x => x.Placa == placa).FirstOrDefault();
+
+                if (objVeiculo != null)
+                {
+                    objVeiculo.IdTipoVeiculo = idTipoVeiculo;
+                    objVeiculo.Placa = placa;
+                    objVeiculo.Renavam = renavam;
+                    objVeiculo.Chassi = chassi;
+                    objVeiculo.Descricao = descricao;
+                    objVeiculo.ZeroQuilometro = zeroQuilometro;
+
+                    context.SaveChanges();
+
+                    return Ok("Veículo alterado com sucesso.");
+                }
+                else 
+                {
+                    return Ok("Veículo não encontrado!");
+                }
             }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao alterar o veículo, entre em contato com o administrador do sistema.");
+            }
+        }
 
+        public IHttpActionResult DeleteVeiculo(string placa)
+        {
+            //https://localhost:44324/api/Veiculo/DeleteVeiculo?placa=FSK3G56
+            try
+            {
+                Veiculo objVeiculo = new Veiculo();
+                objVeiculo = this.context.AspNetVeiculo.Where(x => x.Placa == placa).FirstOrDefault();
 
-            //veiculo.RemoveAt(veiculo.IndexOf(veiculo.First(x => x.Placa.Equals(placa))));
+                if (objVeiculo != null)
+                {
+                    context.AspNetVeiculo.Remove(objVeiculo);
+                    context.SaveChanges();
+                    return Ok("Veículo removido com sucesso");
+                }
+                else {
+                    return BadRequest("Veículo não encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao excluir o veículo, entre em contato com o administrador do sistema.");
+            }
         }
     }
 }

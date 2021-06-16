@@ -10,18 +10,18 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class PecaController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public PecaController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<Peca> peca = new List<Peca>();
 
         public IHttpActionResult GetPeca(string nome)
         {
-            //Declaração de um obejeto Peça
+            //Declaração de um objeto Peça
             Peca objPeca = new Peca();
 
             //Pega um único objeto do tipo Peça

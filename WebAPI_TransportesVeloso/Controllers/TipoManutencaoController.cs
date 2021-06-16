@@ -10,18 +10,18 @@ namespace WebAPI_TransportesVeloso.Controllers
 {
     public class TipoManutencaoController : ApiController
     {
-        ApplicationDbContext context;
+        ApplicationDBContext context;
 
         public TipoManutencaoController()
         {
-            context = new ApplicationDbContext();
+            context = new ApplicationDBContext();
         }
 
         private static List<TipoManutencao> tipoManutencao = new List<TipoManutencao>();
 
         public IHttpActionResult GetTipoManutencao(string descricao)
         {
-            //Declaração de um obejeto TipoManutencao
+            //Declaração de um objeto TipoManutencao
             TipoManutencao objTipoManutencao = new TipoManutencao();
 
             //Pega um único objeto do tipo Contrato
