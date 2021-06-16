@@ -19,7 +19,7 @@ namespace WebAPI_TransportesVeloso.Models
         public DateTime DataAssinatura { get; set; }
         public DateTime DataTermino { get; set; }
         public string Descricao { get; set; }
-        public Byte Arquivo { get; set; } 
+        public Byte? Arquivo { get; set; } 
 
         //[ForeignKey("Hidrometro")]
         //public int IdContratoVeiculo { get; set; }

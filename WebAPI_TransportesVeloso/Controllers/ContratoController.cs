@@ -46,7 +46,7 @@ namespace WebAPI_TransportesVeloso.Controllers
         }
 
         //POST
-        public IHttpActionResult PostContrato(string numero, Decimal valor, DateTime dataAssinatura, DateTime dataTermino, string descricao, Byte? arquivo = null)
+        public IHttpActionResult PostContrato(string numero, Decimal valor, DateTime dataAssinatura, DateTime dataTermino, string descricao, byte? arquivo)
         {
             try
             {
@@ -56,7 +56,11 @@ namespace WebAPI_TransportesVeloso.Controllers
                 objContrato.DataAssinatura = dataAssinatura;
                 objContrato.DataTermino = dataTermino;
                 objContrato.Descricao = descricao;
-                objContrato.Arquivo = (byte)(arquivo = null);
+
+                if (arquivo != null)
+                    objContrato.Arquivo = arquivo;
+                else
+                    objContrato.Arquivo = null;
 
                 context.AspNetContrato.Add(objContrato);
                 context.SaveChanges();
