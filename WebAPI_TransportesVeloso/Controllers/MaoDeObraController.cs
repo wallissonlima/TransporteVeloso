@@ -19,6 +19,7 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         private static List<MaoDeObra> maoDeObra = new List<MaoDeObra>();
 
+        //GET
         public IHttpActionResult GetMaoDeObra(string descricao)
         {
             //Declaração de um objeto MaoDeObra
@@ -43,6 +44,82 @@ namespace WebAPI_TransportesVeloso.Controllers
                 //Se objMaoDeObra for nulo, retorna BadRequest (código 500).
                 return BadRequest("Descriçao não encontrada");
 
+        }
+
+        //POST
+        public IHttpActionResult PostMaoDeObra(string descricao, decimal valor)
+        {
+            try
+            {
+                MaoDeObra objMaoDeObra = new MaoDeObra();
+                objMaoDeObra.Descricao = descricao;
+                objMaoDeObra.Valor = valor;
+
+                context.AspNetMaoDeObra.Add(objMaoDeObra);
+                context.SaveChanges();
+
+                return Ok("MaoDeObra cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao cadastrar o MaoDeObra, entre em contato com o administrador do sistema.");
+            }
+        }
+
+        //PUT
+        public IHttpActionResult PutMaoDeObra(string descricao, decimal valor)
+        {
+            try
+            {
+                MaoDeObra objMaoDeObra = new MaoDeObra();
+                objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.Descricao == descricao).FirstOrDefault();
+
+                if (objMaoDeObra != null)
+                {
+                    objMaoDeObra.Descricao = descricao;
+                    objMaoDeObra.Valor = valor;
+
+                    context.SaveChanges();
+
+                    return Ok("MaoDeObra alterado com sucesso.");
+                }
+                else
+                {
+                    return Ok("MaoDeObra não encontrado!");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao alterar o MaoDeObra, entre em contato com o administrador do sistema.");
+            }
+        }
+
+        //DELETE
+        public IHttpActionResult DeleteMaoDeObra(string descricao)
+        {
+            try
+            {
+                MaoDeObra objMaoDeObra = new MaoDeObra();
+                objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.Descricao == descricao).FirstOrDefault();
+
+                if (objMaoDeObra != null)
+                {
+                    context.AspNetMaoDeObra.Remove(objMaoDeObra);
+                    context.SaveChanges();
+                    return Ok("MaoDeObra removido com sucesso");
+                }
+                else
+                {
+                    return BadRequest("MaoDeObra não encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao excluir o MaoDeObra, entre em contato com o administrador do sistema.");
+            }
         }
     }
 }

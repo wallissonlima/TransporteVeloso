@@ -19,6 +19,7 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         private static List<Contrato> contrato = new List<Contrato>();
 
+        //GET
         public IHttpActionResult GetContrato(string numero)
         {
             //Declaração de um objeto Contrato
@@ -74,12 +75,63 @@ namespace WebAPI_TransportesVeloso.Controllers
             }
         }
 
-        public IHttpActionResult PutContrato(int idContrato, string numero, Decimal valor, DateTime dataAssinatura, DateTime dataTermino, string descricao, Byte? arquivo = null)
+        //PUT
+        public IHttpActionResult PutContrato(string numero, Decimal valor, DateTime dataAssinatura, DateTime dataTermino, string descricao, byte? arquivo)
         {
+            try
+            {
+                Contrato objContrato = new Contrato();
+                objContrato = this.context.AspNetContrato.Where(x => x.Numero == numero).FirstOrDefault();
 
-            return Ok("OK");
+                if (objContrato != null)
+                {
+                    objContrato.Numero = numero;
+                    objContrato.Valor = valor;
+                    objContrato.DataAssinatura = dataAssinatura;
+                    objContrato.DataTermino = dataTermino;
+                    objContrato.Descricao = descricao;
+                }
+                    if (arquivo != null)
+                        objContrato.Arquivo = arquivo;
+                    else
+                        objContrato.Arquivo = null;
+
+                    context.SaveChanges();
+
+                    return Ok("Contrato cadastrado com sucesso");
+                }
+            
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao cadastrar o Contrato, entre em contato com o administrador do sistema.");
+            }
         }
 
-       
+        //DELETE
+        public IHttpActionResult DeleteContrato(string numero)
+        {
+            try
+            {
+                Contrato objContrato = new Contrato();
+                objContrato = this.context.AspNetContrato.Where(x => x.Numero == numero).FirstOrDefault();
+
+                if (objContrato != null)
+                {
+                    context.AspNetContrato.Remove(objContrato);
+                    context.SaveChanges();
+                    return Ok("Contrato removido com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Contrato não encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao excluir o Contrato, entre em contato com o administrador do sistema.");
+            }
+        }
     }
 }

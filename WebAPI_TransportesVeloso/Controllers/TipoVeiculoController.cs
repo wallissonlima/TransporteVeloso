@@ -19,6 +19,7 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         private static List<TipoVeiculo> tipoVeiculo = new List<TipoVeiculo>();
 
+        //GET
         public IHttpActionResult GetTipoVeiculo(string descricao)
         {
             //Declaração de um objeto TipoVeiculo
@@ -42,7 +43,80 @@ namespace WebAPI_TransportesVeloso.Controllers
             else
                 //Se objContrato for nulo, retorna BadRequest (código 500).
                 return BadRequest("Descrição não encontrada");
+        }
 
+        //POST
+        public IHttpActionResult PostTipoVeiculo(string descricao)
+        {
+            try
+            {
+                TipoVeiculo objTipoVeiculo = new TipoVeiculo();
+                objTipoVeiculo.Descricao = descricao;
+
+                context.AspNetTipoVeiculo.Add(objTipoVeiculo);
+                context.SaveChanges();
+
+                return Ok("TipoVeiculo cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao cadastrar o TipoVeiculo, entre em contato com o administrador do sistema.");
+            }
+        }
+
+        //PUT
+        public IHttpActionResult PutTipoVeiculo(string descricao)
+        {
+            try
+            {
+                TipoVeiculo objTipoVeiculo = new TipoVeiculo();
+                objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.Descricao == descricao).FirstOrDefault();
+
+                if (objTipoVeiculo != null)
+                {
+                    objTipoVeiculo.Descricao = descricao;
+
+                    context.SaveChanges();
+
+                    return Ok("TipoVeiculo alterado com sucesso.");
+                }
+                else
+                {
+                    return Ok("TipoVeiculo não encontrado!");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao alterar o TipoVeiculo, entre em contato com o administrador do sistema.");
+            }
+        }
+
+        //DELETE
+        public IHttpActionResult DeleteTipoVeiculo(string descricao)
+        {
+            try
+            {
+                TipoVeiculo objTipoVeiculo = new TipoVeiculo();
+                objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.Descricao== descricao).FirstOrDefault();
+
+                if (objTipoVeiculo != null)
+                {
+                    context.AspNetTipoVeiculo.Remove(objTipoVeiculo);
+                    context.SaveChanges();
+                    return Ok("TipoVeiculo removido com sucesso");
+                }
+                else
+                {
+                    return BadRequest("TipoVeiculo não encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao excluir o TipoVeiculo, entre em contato com o administrador do sistema.");
+            }
         }
     }
 }
