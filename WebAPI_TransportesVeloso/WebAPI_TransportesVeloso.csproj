@@ -97,7 +97,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ConsumoController.cs" />
+    <Compile Include="Controllers\ContratoController.cs" />
+    <Compile Include="Controllers\ContratoVeiculoController.cs" />
+    <Compile Include="Controllers\ItinerarioController.cs" />
+    <Compile Include="Controllers\ManutencaoController.cs" />
+    <Compile Include="Controllers\MaoDeObraController.cs" />
+    <Compile Include="Controllers\PecaController.cs" />
+    <Compile Include="Controllers\PerfilUsuarioController.cs" />
+    <Compile Include="Controllers\TipoManutencaoController.cs" />
+    <Compile Include="Controllers\TipoVeiculoController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VeiculoController.cs" />
+    <Compile Include="Controllers\ViagemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
