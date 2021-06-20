@@ -20,13 +20,26 @@ namespace WebAPI_TransportesVeloso.Controllers
         private static List<TipoVeiculo> tipoVeiculo = new List<TipoVeiculo>();
 
         //GET
-        public IHttpActionResult GetTipoVeiculo(string descricao)
+        public IHttpActionResult GetAll()
+        {
+            //Declara um lista de objetos do tipo TipoVeiculo
+            List<TipoVeiculo> lstTipoVeiculo = new List<TipoVeiculo>();
+
+            //Pega um único objeto do tipo TipoVeiculo
+            lstTipoVeiculo = this.context.AspNetTipoVeiculo.ToList();
+            //Retorno OK (Código 200)
+            return Ok(lstTipoVeiculo);
+        }
+
+        //GET
+        public IHttpActionResult GetTipoVeiculo(string idTipoVeiculo)
         {
             //Declaração de um objeto TipoVeiculo
             TipoVeiculo objTipoVeiculo = new TipoVeiculo();
+            int vIdTipoVeiculo = int.Parse(idTipoVeiculo);
 
             //Pega um único objeto do tipo TipoVeiculo
-            objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.Descricao == descricao).FirstOrDefault();
+            objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.IdTipoVeiculo == vIdTipoVeiculo).FirstOrDefault();
 
             //Declara um lista de objetos do tipo TipoVeiculo
             List<TipoVeiculo> lstTipoVeiculo = new List<TipoVeiculo>();
