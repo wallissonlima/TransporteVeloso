@@ -75,7 +75,7 @@ namespace WebAPI_TransportesVeloso.Controllers
             }
         }
         
-        //POST
+        //PUT
         public IHttpActionResult PutVeiculo(int idTipoVeiculo, string placa, string renavam, string chassi, string descricao, bool zeroQuilometro)
         {
             //https://localhost:44324/api/Veiculo/PostVeiculo?idTipoVeiculo=1&placa=TTT0T12&renavam=AAA423D5870&chassi=RRRRGH5412OPL6394&descricao=TESTE_DE_PUT&zeroQuilometro=false
@@ -101,7 +101,7 @@ namespace WebAPI_TransportesVeloso.Controllers
             }
         }
 
-        //PUT
+        //POST
         public IHttpActionResult PostVeiculo(int idVeiculo, int idTipoVeiculo, string placa, string renavam, string chassi, string descricao, bool zeroQuilometro)
         {
             //https://localhost:44324/api/Veiculo/PostVeiculo?idTipoVeiculo=1&placa=TTT0T12&renavam=AAA423D5870&chassi=RRRRGH5412OPL6394&descricao=TESTE_DE_PUT&zeroQuilometro=false
