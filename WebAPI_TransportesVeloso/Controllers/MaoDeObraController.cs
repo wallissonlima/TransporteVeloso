@@ -20,6 +20,18 @@ namespace WebAPI_TransportesVeloso.Controllers
         private static List<MaoDeObra> maoDeObra = new List<MaoDeObra>();
 
         //GET
+        public IHttpActionResult GetAll()
+        {
+            //Declara um lista de objetos do tipo TipoVeiculo
+            List<MaoDeObra> lstMaoDeObra = new List<MaoDeObra>();
+
+            //Pega um único objeto do tipo TipoVeiculo
+            lstMaoDeObra = this.context.AspNetMaoDeObra.ToList();
+            //Retorno OK (Código 200)
+            return Ok(lstMaoDeObra);
+        }
+
+        //GET
         public IHttpActionResult GetMaoDeObra(string descricao)
         {
             //Declaração de um objeto MaoDeObra
