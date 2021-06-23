@@ -22,6 +22,7 @@ namespace WebAPI_TransportesVeloso.Controllers
         //GET
         public IHttpActionResult GetAll()
         {
+            try { 
             //Declara um lista de objetos do tipo TipoVeiculo
             List<TipoVeiculo> lstTipoVeiculo = new List<TipoVeiculo>();
 
@@ -29,37 +30,47 @@ namespace WebAPI_TransportesVeloso.Controllers
             lstTipoVeiculo = this.context.AspNetTipoVeiculo.ToList();
             //Retorno OK (Código 200)
             return Ok(lstTipoVeiculo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao pesquisar o tipo veículo. , entre em contato com o administrador do sistema.");
+                throw;
+            }
         }
 
         //GET
-        public IHttpActionResult GetTipoVeiculo(string idTipoVeiculo)
+        public IHttpActionResult GetTipoVeiculo(string descricao = null, int idTipoVeiculo = 0)
         {
-            //Declaração de um objeto TipoVeiculo
-            TipoVeiculo objTipoVeiculo = new TipoVeiculo();
-            int vIdTipoVeiculo = int.Parse(idTipoVeiculo);
-
-            //Pega um único objeto do tipo TipoVeiculo
-            objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.IdTipoVeiculo == vIdTipoVeiculo).FirstOrDefault();
-
-            //Declara um lista de objetos do tipo TipoVeiculo
-            List<TipoVeiculo> lstTipoVeiculo = new List<TipoVeiculo>();
-
-            //Se o objTipoVeiculo for diferente de nulo.
-            if (objTipoVeiculo != null)
+            try
             {
-                //Adiciona o objeto TipoVeiculo à lista de TipoVeiculo
-                lstTipoVeiculo.Add(objTipoVeiculo);
+                //Declaração de um objeto Veículo
+                TipoVeiculo objTipoVeiculo = new TipoVeiculo();
 
-                //Retorno OK (Código 200)
+                //Pega um único objeto veículo pela placa
+                if (!string.IsNullOrWhiteSpace(descricao))
+                    objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.Descricao == descricao).FirstOrDefault();
+                else if (idTipoVeiculo != 0)
+                    objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.IdTipoVeiculo == idTipoVeiculo).FirstOrDefault();
+
+                //Declara uma lista de objetos do tipo veículo
+                List<TipoVeiculo> lstTipoVeiculo = new List<TipoVeiculo>();
+
+                //Se o objTipoVeiculo for diferente de nulo.
+                if (objTipoVeiculo != null)
+                    //Adiciona o objeto veículo à lista de Tipo Veículos
+                    lstTipoVeiculo.Add(objTipoVeiculo);
+
                 return Ok(lstTipoVeiculo);
             }
-            else
-                //Se objContrato for nulo, retorna BadRequest (código 500).
-                return BadRequest("Descrição não encontrada");
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao pesquisar o tipo veículo. , entre em contato com o administrador do sistema.");
+                throw;
+            }
         }
 
         //POST
-        public IHttpActionResult PostTipoVeiculo(string descricao)
+        public IHttpActionResult PutTipoVeiculo(string descricao)
         {
             try
             {
@@ -79,56 +90,61 @@ namespace WebAPI_TransportesVeloso.Controllers
         }
 
         //PUT
-        public IHttpActionResult PutTipoVeiculo(string descricao)
+        public IHttpActionResult PostTipoVeiculo(int idTipoVeiculo, string descricao)
         {
             try
             {
                 TipoVeiculo objTipoVeiculo = new TipoVeiculo();
-                objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.Descricao == descricao).FirstOrDefault();
+                objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.IdTipoVeiculo == idTipoVeiculo).FirstOrDefault();
 
                 if (objTipoVeiculo != null)
                 {
+                    objTipoVeiculo.IdTipoVeiculo = idTipoVeiculo;
                     objTipoVeiculo.Descricao = descricao;
 
                     context.SaveChanges();
 
-                    return Ok("TipoVeiculo alterado com sucesso.");
+                    return Ok("Tipo Veiculo alterado com sucesso.");
                 }
                 else
                 {
-                    return Ok("TipoVeiculo não encontrado!");
+                    return Ok("Tipo Veiculo não encontrado!");
                 }
             }
             catch (Exception ex)
             {
                 string vErro = ex.Message;
-                return BadRequest("Erro ao alterar o TipoVeiculo, entre em contato com o administrador do sistema.");
+                return BadRequest("Erro ao alterar o Tipo Veiculo, entre em contato com o administrador do sistema.");
             }
         }
 
         //DELETE
-        public IHttpActionResult DeleteTipoVeiculo(string descricao)
+        public IHttpActionResult DeleteTipoVeiculo(string descricao = null, int idTipoVeiculo = 0)
         {
             try
             {
                 TipoVeiculo objTipoVeiculo = new TipoVeiculo();
-                objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.Descricao== descricao).FirstOrDefault();
+
+                if (!string.IsNullOrWhiteSpace(descricao))
+                    objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.Descricao == descricao).FirstOrDefault();
+                else if (idTipoVeiculo != 0)
+                    objTipoVeiculo = this.context.AspNetTipoVeiculo.Where(x => x.IdTipoVeiculo == idTipoVeiculo).FirstOrDefault();
 
                 if (objTipoVeiculo != null)
                 {
                     context.AspNetTipoVeiculo.Remove(objTipoVeiculo);
                     context.SaveChanges();
-                    return Ok("TipoVeiculo removido com sucesso");
+                    return Ok(true);
                 }
                 else
                 {
-                    return BadRequest("TipoVeiculo não encontrado.");
+                    return Ok(false);
                 }
             }
             catch (Exception ex)
             {
                 string vErro = ex.Message;
-                return BadRequest("Erro ao excluir o TipoVeiculo, entre em contato com o administrador do sistema.");
+                return BadRequest("Erro ao excluir o tipo veículo, entre em contato com o administrador do sistema.");
             }
         }
     }
