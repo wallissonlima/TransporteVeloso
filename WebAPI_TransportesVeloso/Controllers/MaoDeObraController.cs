@@ -22,50 +22,61 @@ namespace WebAPI_TransportesVeloso.Controllers
         //GET
         public IHttpActionResult GetAll()
         {
-            //Declara um lista de objetos do tipo TipoVeiculo
+            try { 
+            //Declaração de um objeto MaoDeObra
             List<MaoDeObra> lstMaoDeObra = new List<MaoDeObra>();
+            lstMaoDeObra = context.AspNetMaoDeObra.ToList();
 
-            //Pega um único objeto do tipo TipoVeiculo
-            lstMaoDeObra = this.context.AspNetMaoDeObra.ToList();
-            //Retorno OK (Código 200)
+
+            //Retorno ok (código 200)
             return Ok(lstMaoDeObra);
+        }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao pesquisar o veículo. , entre em contato com o administrador do sistema.");
+                throw;
+            }
         }
 
         //GET
-        public IHttpActionResult GetMaoDeObra(string descricao)
+        public IHttpActionResult GetMaoDeObra(string descricao = null, int idMaoDeObra = 0)
         {
-            //Declaração de um objeto MaoDeObra
-            MaoDeObra objMaoDeObra = new MaoDeObra();
-
-            //Pega um único objeto do tipo Contrato
-            objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.Descricao == descricao).FirstOrDefault();
-
-            //Declara um lista de objetos do tipo MaoDeObra
-            List<MaoDeObra> lstMaoDeObra = new List<MaoDeObra>();
-
-            //Se o objContrato for diferente de nulo.
-            if (objMaoDeObra != null)
+            try
             {
-                //Adiciona o objeto MaoDeObra à lista de MaoDeObra
-                lstMaoDeObra.Add(objMaoDeObra);
+                //Declaração de um objeto MaoDeObra
+                MaoDeObra objMaoDeObra = new MaoDeObra();
 
-                //Retorno OK (Código 200)
+                //Pega um único objeto MaoDeObra pela descrição
+                if (!string.IsNullOrWhiteSpace(descricao))
+                    objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.Descricao == descricao).FirstOrDefault();
+                else if (idMaoDeObra != 0)
+                    objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.IdMaoDeObra == idMaoDeObra).FirstOrDefault();
+
+                //Declara uma lista de objetos da MaoDeObra
+                List<MaoDeObra> lstMaoDeObra = new List<MaoDeObra>();
+
+                //Se o objMaoDeObra for diferente de nulo.
+                if (objMaoDeObra != null)
+                    //Adiciona o objeto veículo à lista de Tipo Veículos
+                    lstMaoDeObra.Add(objMaoDeObra);
+
                 return Ok(lstMaoDeObra);
             }
-            else
-                //Se objMaoDeObra for nulo, retorna BadRequest (código 500).
-                return BadRequest("Descriçao não encontrada");
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao pesquisar o MaoDeObra. , entre em contato com o administrador do sistema.");
+                throw;
+            }
 
         }
 
         //POST
-        public IHttpActionResult PostMaoDeObra(string descricao, decimal valor)
+        public IHttpActionResult PutMaoDeObra(string descricao)
         {
             try
             {
                 MaoDeObra objMaoDeObra = new MaoDeObra();
                 objMaoDeObra.Descricao = descricao;
-                objMaoDeObra.Valor = valor;
 
                 context.AspNetMaoDeObra.Add(objMaoDeObra);
                 context.SaveChanges();
@@ -80,17 +91,17 @@ namespace WebAPI_TransportesVeloso.Controllers
         }
 
         //PUT
-        public IHttpActionResult PutMaoDeObra(string descricao, decimal valor)
+        public IHttpActionResult PostMaoDeObra(int idMaoDeObra, string descricao)
         {
             try
             {
                 MaoDeObra objMaoDeObra = new MaoDeObra();
-                objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.Descricao == descricao).FirstOrDefault();
+                objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.IdMaoDeObra == idMaoDeObra).FirstOrDefault();
 
                 if (objMaoDeObra != null)
                 {
+                    objMaoDeObra.IdMaoDeObra = idMaoDeObra;
                     objMaoDeObra.Descricao = descricao;
-                    objMaoDeObra.Valor = valor;
 
                     context.SaveChanges();
 
@@ -109,22 +120,26 @@ namespace WebAPI_TransportesVeloso.Controllers
         }
 
         //DELETE
-        public IHttpActionResult DeleteMaoDeObra(string descricao)
+        public IHttpActionResult DeleteMaoDeObra(string descricao = null, int idMaoDeObra = 0)
         {
             try
             {
                 MaoDeObra objMaoDeObra = new MaoDeObra();
-                objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.Descricao == descricao).FirstOrDefault();
+
+                if (!string.IsNullOrWhiteSpace(descricao))
+                    objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.Descricao == descricao).FirstOrDefault();
+                else if (idMaoDeObra != 0)
+                    objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.IdMaoDeObra == idMaoDeObra).FirstOrDefault();
 
                 if (objMaoDeObra != null)
                 {
                     context.AspNetMaoDeObra.Remove(objMaoDeObra);
                     context.SaveChanges();
-                    return Ok("MaoDeObra removido com sucesso");
+                    return Ok(true);
                 }
                 else
                 {
-                    return BadRequest("MaoDeObra não encontrado.");
+                    return Ok(false);
                 }
             }
             catch (Exception ex)

@@ -20,33 +20,58 @@ namespace WebAPI_TransportesVeloso.Controllers
         private static List<Peca> peca = new List<Peca>();
 
         //GET
-        public IHttpActionResult GetPeca(string nome)
+        public IHttpActionResult GetAll()
         {
+            try
+            {
+
+                //Declaração de um objeto Peça
+                List<Peca> lstPeca = new List<Peca>();
+                lstPeca = context.AspNetPeca.ToList();
+
+
+                //Retorno ok (código 200)
+                return Ok(lstPeca);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao pesquisar o peca. , entre em contato com o administrador do sistema.");
+                throw;
+            }
+        }
+
+        //GET
+        public IHttpActionResult GetPeca(string nome = null, int idPeca = 0)
+        {
+            try { 
             //Declaração de um objeto Peça
             Peca objPeca = new Peca();
 
-            //Pega um único objeto do tipo Peça
-            objPeca = this.context.AspNetPeca.Where(x => x.Nome == nome).FirstOrDefault();
+                //Pega um único objeto do tipo Peça
+                if (!string.IsNullOrWhiteSpace(nome))
+                    objPeca = this.context.AspNetPeca.Where(x => x.Nome == nome).FirstOrDefault();
+                else if (idPeca != 0)
+                    objPeca = this.context.AspNetPeca.Where(x => x.IdPeca == idPeca).FirstOrDefault();
 
-            //Declara um lista de objetos do tipo Peça
-            List<Peca> lstPeca = new List<Peca>();
+                //Declara uma lista de objetos do tipo Peca
+                List<Peca> lstPeca = new List<Peca>();
 
-            //Se o objPeca for diferente de nulo.
-            if (objPeca != null)
-            {
-                //Adiciona o objeto Peca à lista de Peça
-                lstPeca.Add(objPeca);
+                //Se o objPeca for diferente de nulo.
+                if (objPeca != null)
+                    //Adiciona o objeto veículo à lista de Peca
+                    lstPeca.Add(objPeca);
 
-                //Retorno OK (Código 200)
                 return Ok(lstPeca);
             }
-            else
-                //Se objContrato for nulo, retorna BadRequest (código 500).
-                return BadRequest("Nome não encontrada");
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao pesquisar o peça. , entre em contato com o administrador do sistema.");
+                throw;
+            }
         }
 
         //POST
-        public IHttpActionResult PostPeca(string nome, int quantidade, decimal valor)
+        public IHttpActionResult PutPeca(string nome, int quantidade, decimal valor)
         {
             try
             {
@@ -68,15 +93,16 @@ namespace WebAPI_TransportesVeloso.Controllers
         }
 
         //PUT
-        public IHttpActionResult PutPeca(string nome, int quantidade, decimal valor)
+        public IHttpActionResult PostPeca(int idPeca, string nome, int quantidade, decimal valor)
         {
             try
             {
                 Peca objPeca = new Peca();
-                objPeca = this.context.AspNetPeca.Where(x => x.Nome == nome).FirstOrDefault();
+                objPeca = this.context.AspNetPeca.Where(x => x.IdPeca == idPeca).FirstOrDefault();
 
                 if (objPeca != null)
                 {
+                objPeca.IdPeca = idPeca;
                 objPeca.Nome = nome;
                 objPeca.Quantidade = quantidade;
                 objPeca.Valor = valor;
@@ -98,28 +124,32 @@ namespace WebAPI_TransportesVeloso.Controllers
         }
 
         //DELETE
-        public IHttpActionResult DeletePeca(string nome)
+        public IHttpActionResult DeletePeca(string nome = null, int idPeca = 0)
         {
             try
             {
                 Peca objPeca = new Peca();
-                objPeca = this.context.AspNetPeca.Where(x => x.Nome == nome).FirstOrDefault();
+
+                if (!string.IsNullOrWhiteSpace(nome))
+                    objPeca = this.context.AspNetPeca.Where(x => x.Nome == nome).FirstOrDefault();
+                else if (idPeca != 0)
+                    objPeca = this.context.AspNetPeca.Where(x => x.IdPeca == idPeca).FirstOrDefault();
 
                 if (objPeca != null)
                 {
                     context.AspNetPeca.Remove(objPeca);
                     context.SaveChanges();
-                    return Ok("Peça removido com sucesso");
+                    return Ok(true);
                 }
                 else
                 {
-                    return BadRequest("Peça não encontrado.");
+                    return Ok(false);
                 }
             }
             catch (Exception ex)
             {
                 string vErro = ex.Message;
-                return BadRequest("Erro ao excluir o Peça, entre em contato com o administrador do sistema.");
+                return BadRequest("Erro ao excluir o peça, entre em contato com o administrador do sistema.");
             }
         }
     }
