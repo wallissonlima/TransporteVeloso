@@ -20,6 +20,24 @@ namespace WebAPI_TransportesVeloso.Controllers
         private static List<Usuario> usuario = new List<Usuario>();
 
         //GET
+        public IHttpActionResult GetAutenticar(string email, string senha)
+        {
+            try
+            {
+                Usuario objUsuario = new Usuario();
+
+                //Pega um único objeto do tipo Usuario
+                objUsuario = this.context.AspNetUsuario.Where(x => x.Email == email && x.Senha == senha).FirstOrDefault();
+                return Ok(objUsuario);
+            }
+            catch (Exception ex)
+            {
+                string vErro = ex.Message;
+                return BadRequest("Erro ao buscar usuário.");
+            }
+        }
+
+        //GET
         public IHttpActionResult GetUsuario(string nome)
         {
             //Declaração de um objeto Usuario

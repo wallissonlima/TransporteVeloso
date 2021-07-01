@@ -49,6 +49,8 @@ namespace WebAPI_TransportesVeloso.Controllers
                 //Pega um único objeto MaoDeObra pela descrição
                 if (!string.IsNullOrWhiteSpace(descricao))
                     objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.Descricao == descricao).FirstOrDefault();
+
+
                 else if (idMaoDeObra != 0)
                     objMaoDeObra = this.context.AspNetMaoDeObra.Where(x => x.IdMaoDeObra == idMaoDeObra).FirstOrDefault();
 
@@ -70,13 +72,14 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         }
 
-        //POST
-        public IHttpActionResult PutMaoDeObra(string descricao)
+        //PUT
+        public IHttpActionResult PutMaoDeObra(string descricao, string valor)
         {
             try
             {
                 MaoDeObra objMaoDeObra = new MaoDeObra();
                 objMaoDeObra.Descricao = descricao;
+                objMaoDeObra.Valor = decimal.Parse(valor);
 
                 context.AspNetMaoDeObra.Add(objMaoDeObra);
                 context.SaveChanges();
@@ -90,8 +93,8 @@ namespace WebAPI_TransportesVeloso.Controllers
             }
         }
 
-        //PUT
-        public IHttpActionResult PostMaoDeObra(int idMaoDeObra, string descricao)
+        //POST
+        public IHttpActionResult PostMaoDeObra(int idMaoDeObra, string descricao, string valor)
         {
             try
             {
@@ -102,6 +105,7 @@ namespace WebAPI_TransportesVeloso.Controllers
                 {
                     objMaoDeObra.IdMaoDeObra = idMaoDeObra;
                     objMaoDeObra.Descricao = descricao;
+                    objMaoDeObra.Valor = decimal.Parse(valor);
 
                     context.SaveChanges();
 
