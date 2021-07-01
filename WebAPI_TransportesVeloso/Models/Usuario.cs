@@ -17,7 +17,8 @@ namespace WebAPI_TransportesVeloso.Models
         public string Telefone { get; set; }
         public string Endereco { get; set; }
         public string Senha { get; set; }
-        public int IdPerfilUsuario { get; set; }
+        public int? IdPerfilUsuario { get; set; }
+        public bool Autorizado { get; set; }
 
     }
 }

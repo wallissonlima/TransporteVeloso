@@ -43,28 +43,28 @@ namespace WebAPI_TransportesVeloso.Controllers
             //Declaração de um objeto Usuario
             Usuario objUsuario = new Usuario();
 
-                //Pega um único objeto do tipo Usuario
-                objUsuario = this.context.AspNetUsuario.Where(x => x.Nome == nome).FirstOrDefault();
+            //Pega um único objeto do tipo Usuario
+            objUsuario = this.context.AspNetUsuario.Where(x => x.Nome == nome).FirstOrDefault();
 
-                //Declara um lista de objetos do tipo Usuario
-                List<Usuario> lstUsuario = new List<Usuario>();
+            //Declara um lista de objetos do tipo Usuario
+            List<Usuario> lstUsuario = new List<Usuario>();
 
-                //Se o objUsuario for diferente de nulo.
-                if (objUsuario != null)
+            //Se o objUsuario for diferente de nulo.
+            if (objUsuario != null)
             {
-                    //Adiciona o objeto Usuario à lista de Usuario
-                    lstUsuario.Add(objUsuario);
+                //Adiciona o objeto Usuario à lista de Usuario
+                lstUsuario.Add(objUsuario);
 
                 //Retorno OK (Código 200)
                 return Ok(lstUsuario);
             }
             else
-                    //Se objUsuario for nulo, retorna BadRequest (código 500).
-                    return BadRequest("Numero não encontrada");
+                //Se objUsuario for nulo, retorna BadRequest (código 500).
+                return BadRequest("Numero não encontrada");
         }
 
-        //POST
-        public IHttpActionResult PostUsuario(string nome, string email, string telefone, string endereco, string senha, int idPerfilUsuario)
+        //PUT
+        public IHttpActionResult PutUsuario(string nome, string email, string telefone, string endereco, string senha, int? idPerfilUsuario, bool autorizado)
         {
             try
             {
@@ -75,11 +75,12 @@ namespace WebAPI_TransportesVeloso.Controllers
                 objUsuario.Endereco = endereco;
                 objUsuario.Senha = senha;
                 objUsuario.IdPerfilUsuario = idPerfilUsuario;
+                objUsuario.Autorizado = autorizado;
 
                 context.AspNetUsuario.Add(objUsuario);
                 context.SaveChanges();
 
-                return Ok("Usuario cadastrado com sucesso");
+                return Ok("Success");
             }
             catch (Exception ex)
             {
@@ -88,8 +89,8 @@ namespace WebAPI_TransportesVeloso.Controllers
             }
         }
 
-        //PUT
-        public IHttpActionResult PutUsuario(string nome, string email, string telefone, string endereco, string senha, int idPerfilUsuario)
+        //POST
+        public IHttpActionResult PostUsuario(int idUsuario, string nome, string email, string telefone, string endereco, string senha, int idPerfilUsuario)
         {
             try
             {
@@ -98,16 +99,17 @@ namespace WebAPI_TransportesVeloso.Controllers
 
                 if (objUsuario != null)
                 {
-                objUsuario.Nome = nome;
-                objUsuario.Email = email;
-                objUsuario.Telefone = telefone;
-                objUsuario.Endereco = endereco;
-                objUsuario.Senha = senha;
-                objUsuario.IdPerfilUsuario = idPerfilUsuario;
+                    objUsuario.IdUsuario = idUsuario;
+                    objUsuario.Nome = nome;
+                    objUsuario.Email = email;
+                    objUsuario.Telefone = telefone;
+                    objUsuario.Endereco = endereco;
+                    objUsuario.Senha = senha;
+                    objUsuario.IdPerfilUsuario = idPerfilUsuario;
 
                     context.SaveChanges();
 
-                    return Ok("Usuario alterado com sucesso.");
+                    return Ok("Usuário alterado com sucesso.");
                 }
                 else
                 {
@@ -117,7 +119,7 @@ namespace WebAPI_TransportesVeloso.Controllers
             catch (Exception ex)
             {
                 string vErro = ex.Message;
-                return BadRequest("Erro ao alterar o Usuario, entre em contato com o administrador do sistema.");
+                return BadRequest("Erro ao alterar o usuário, entre em contato com o administrador do sistema.");
             }
         }
 
@@ -133,17 +135,17 @@ namespace WebAPI_TransportesVeloso.Controllers
                 {
                     context.AspNetUsuario.Remove(objUsuario);
                     context.SaveChanges();
-                    return Ok("Usuario removido com sucesso");
+                    return Ok("Usuário removido com sucesso");
                 }
                 else
                 {
-                    return BadRequest("Usuario não encontrado.");
+                    return BadRequest("Usuário não encontrado.");
                 }
             }
             catch (Exception ex)
             {
                 string vErro = ex.Message;
-                return BadRequest("Erro ao excluir o Usuario, entre em contato com o administrador do sistema.");
+                return BadRequest("Erro ao excluir o usuário, entre em contato com o administrador do sistema.");
             }
         }
     }
