@@ -19,34 +19,58 @@ namespace WebAPI_TransportesVeloso.Controllers
 
         private static List<Manutencao> manutencao = new List<Manutencao>();
 
-        //GET
-        public IHttpActionResult GetManutencao(DateTime dataManutencao)
+        //GETAll
+        public IHttpActionResult GetAll()
         {
+            try
+            {
+                //Declaração de um objeto Veículo
+                List<Manutencao> lstManutencao = new List<Manutencao>();
+                lstManutencao = context.AspNetManutencao.ToList();
+
+
+                //Retorno ok (código 200)
+                return Ok(lstManutencao);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao pesquisar o manutencão. , entre em contato com o administrador do sistema.");
+                throw;
+            }
+        }
+
+        //GET
+        public IHttpActionResult GetManutencao(DateTime dataManutencao, int idManutencao = 0)
+        {
+            try { 
             //Declaração de um objeto Manutencao
             Manutencao objManutencao = new Manutencao();
 
             //Pega um único objeto do tipo Manutencao
-            objManutencao = this.context.AspNetManutencao.Where(x => x.DataManutencao == dataManutencao).FirstOrDefault();
+            if (!string.ConvertToDateTime(dataManutencao))
+               objManutencao = this.context.AspNetManutencao.Where(x => x.DataManutencao == dataManutencao).FirstOrDefault();
+            else if (idManutencao != 0)
+               objManutencao = this.context.AspNetManutencao.Where(x => x.IdManutencao == idManutencao).FirstOrDefault();
 
-            //Declara um lista de objetos do tipo Manutencao
-            List<Manutencao> lstManutencao = new List<Manutencao>();
+                //Declara uma lista de objetos do tipo Manutencao
+                List<Manutencao> lstManutencao = new List<Manutencao>();
 
-            //Se o objManutencao for diferente de nulo.
+            //Se o objVeiculo for diferente de nulo.
             if (objManutencao != null)
-            {
-                //Adiciona o objeto Manutencao à lista de Manutencao
-                lstManutencao.Add(objManutencao);
+                    //Adiciona o objeto veículo à lista de Manutencao
+                    lstManutencao.Add(objManutencao);
 
-                //Retorno OK (Código 200)
-                return Ok(lstManutencao);
+            return Ok(lstManutencao);
+        }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao pesquisar o manutenção. , entre em contato com o administrador do sistema.");
+                throw;
             }
-            else
-                //Se objManutencao for nulo, retorna BadRequest (código 500).
-                return BadRequest("Manutencao não encontrada");
         }
 
-        //POST
-        public IHttpActionResult PostManutencao(DateTime dataManutencao, decimal valorManutencao, string descricao, int idTipoManutencao, int idPeca, int idMaoDeObra, int idVeiculo )
+//PUT
+public IHttpActionResult PutManutencao(DateTime dataManutencao, decimal valorManutencao, string descricao, int idTipoManutencao, int idPeca, int idMaoDeObra, int idVeiculo )
         {
             try
             {
@@ -71,8 +95,8 @@ namespace WebAPI_TransportesVeloso.Controllers
             }
         }
 
-        //PUT
-        public IHttpActionResult PutManutencao(DateTime dataManutencao, decimal valorManutencao, string descricao, int idTipoManutencao, int idPeca, int idMaoDeObra, int idVeiculo)
+        //POST
+        public IHttpActionResult PostManutencao(DateTime dataManutencao, decimal valorManutencao, string descricao, int idTipoManutencao, int idPeca, int idMaoDeObra, int idVeiculo)
         {
             try
             {
